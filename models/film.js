@@ -55,6 +55,7 @@ const filmSchema = new mongoose.Schema(
     movieId: {
       type: String,
       required: true,
+      unique: true,
     },
     nameRU: {
       type: String,
@@ -65,6 +66,7 @@ const filmSchema = new mongoose.Schema(
       required: true,
     },
   },
+  { versionKey: false },
 );
 
 module.exports = mongoose.model('film', filmSchema);

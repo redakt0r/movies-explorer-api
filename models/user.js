@@ -26,9 +26,8 @@ const userSchema = new mongoose.Schema(
       maxLength: [30, 'Максимальная длина поля "name" - 30, вы ввели `{VALUE}`'],
     },
   },
+  { versionKey: false },
 );
-
-module.exports = mongoose.model('user', userSchema);
 
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })
@@ -43,3 +42,5 @@ userSchema.statics.findUserByCredentials = function (email, password) {
         });
     });
 };
+
+module.exports = mongoose.model('user', userSchema);

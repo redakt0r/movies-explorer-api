@@ -49,8 +49,8 @@ module.exports.postMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovieById = (req, res, next) => {
-  const { filmId } = req.params;
-  Film.findByIdAndDelete(filmId)
+  const movieId = req.params._id;
+  Film.findByIdAndDelete(movieId)
     .orFail(() => { throw new NotFoundError('Карточка не найдена'); })
     .then((data) => res.send({ data }))
     .catch((err) => {
