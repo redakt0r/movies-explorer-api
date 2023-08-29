@@ -4,7 +4,7 @@ const {
   getMovies,
   postMovie,
   deleteMovieById,
-} = require('../controllers/films');
+} = require('../controllers/movies');
 
 moviesRouter.get('/', getMovies);
 moviesRouter.post('/', postMovie);

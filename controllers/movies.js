@@ -1,4 +1,4 @@
-const Film = require('../models/film');
+const Movie = require('../models/movie');
 const { STATUS_OK } = require('../utils/constants');
 
 const BadRequestError = require('../errors/BadRequestError');
@@ -6,7 +6,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.getMovies = (_req, res, next) => {
-  Film.find({})
+  Movie.find({})
     .then((films) => res.send(films))
     .catch(next);
 };
@@ -26,7 +26,7 @@ module.exports.postMovie = (req, res, next) => {
     nameEN,
   } = req.body;
   const owner = req.user._id;
-  Film.create({
+  Movie.create({
     country,
     director,
     duration,
@@ -50,7 +50,7 @@ module.exports.postMovie = (req, res, next) => {
 
 module.exports.deleteMovieById = (req, res, next) => {
   const movieId = req.params._id;
-  Film.findByIdAndDelete(movieId)
+  Movie.findByIdAndDelete(movieId)
     .orFail(() => { throw new NotFoundError('Карточка не найдена'); })
     .then((data) => res.send({ data }))
     .catch((err) => {
