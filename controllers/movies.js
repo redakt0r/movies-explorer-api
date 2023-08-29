@@ -5,8 +5,11 @@ const BadRequestError = require('../errors/BadRequestError');
 
 const NotFoundError = require('../errors/NotFoundError');
 
+const ForbiddenError = require('../errors/NotFoundError');
+
 module.exports.getMovies = (_req, res, next) => {
   Movie.find({})
+    .populate('owner')
     .then((films) => res.send(films))
     .catch(next);
 };
@@ -50,9 +53,13 @@ module.exports.postMovie = (req, res, next) => {
 
 module.exports.deleteMovieById = (req, res, next) => {
   const movieId = req.params._id;
-  Movie.findByIdAndDelete(movieId)
+  Movie.findById(movieId)
     .orFail(() => { throw new NotFoundError('Карточка не найдена'); })
-    .then((data) => res.send({ data }))
+    .then((movie) => {
+      if (movie.owner.toString() !== req.user._id) { throw new ForbiddenError('Чужой фильм нельзя удалить'); }
+      Movie.deleteOne(movie)
+        .then(() => res.send('Фильм удален'));
+    })
     .catch((err) => {
       if (err.kind === 'ObjectId') { throw new BadRequestError('Некорректный ID'); }
       next(err);

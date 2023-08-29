@@ -12,7 +12,12 @@ const { STATUS_OK } = require('../utils/constants');
 module.exports.getUserInfo = (req, res, next) => {
   const { _id } = req.user;
   User.findById(_id)
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+    }))
     .catch(next);
 };
 
@@ -40,7 +45,6 @@ module.exports.signIn = (req, res, next) => {
       });
       return res.send({
         user: {
-          _id: user._id,
           name: user.name,
           email: user.email,
         },
@@ -64,8 +68,8 @@ module.exports.signUp = (req, res, next) => {
     });
 };
 
-module.exports.signOut = (_req, res, next) => {
+module.exports.signOut = (_req, res) => {
   if (res.cookie) {
-    res.clearCookie('jwt').send({ message: 'Вы вышли из приложения' }).catch(next);
+    res.clearCookie('jwt').send({ message: 'Вы вышли из приложения' });
   }
 };

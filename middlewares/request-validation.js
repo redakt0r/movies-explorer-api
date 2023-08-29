@@ -18,20 +18,23 @@ module.exports.signUpRequestValidation = celebrate({
 
 module.exports.postMovieRequestValidation = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().regex(URL_REG_EXP).message('Некорректная ссылка'),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required().min(2).max(30),
+    description: Joi.string().required().min(2).max(30),
+    image: Joi.string().required().regex(URL_REG_EXP).message('Некорректная ссылка'),
+    trailerLink: Joi.string().required().regex(URL_REG_EXP).message('Некорректная ссылка'),
+    thumbnail: Joi.string().required().regex(URL_REG_EXP).message('Некорректная ссылка'),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 
 module.exports.deleteMovieRequestValidation = celebrate({
   params: Joi.object().keys({
     _id: Joi.string().length(24).required().hex(),
-  }),
-});
-
-module.exports.getUserInfoRequestValidation = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().length(24).required().hex(),
   }),
 });
 
