@@ -5,9 +5,13 @@ const moviesRouter = require('./movies');
 const { auth } = require('../middlewares/auth');
 const { signUp, signIn, signOut } = require('../controllers/users');
 const NotFoundError = require('../errors/NotFoundError');
+const {
+  signInRequestValidation,
+  signUpRequestValidation,
+} = require('../middlewares/request-validation');
 
-router.use('/signup', signUp);
-router.use('/signin', signIn);
+router.use('/signup', signUpRequestValidation, signUp);
+router.use('/signin', signInRequestValidation, signIn);
 
 router.use('/users', auth, usersRouter);
 router.use('/movies', auth, moviesRouter);

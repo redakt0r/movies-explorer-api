@@ -5,9 +5,13 @@ const {
   postMovie,
   deleteMovieById,
 } = require('../controllers/movies');
+const {
+  postMovieRequestValidation,
+  deleteMovieRequestValidation,
+} = require('../middlewares/request-validation');
 
 moviesRouter.get('/', getMovies);
-moviesRouter.post('/', postMovie);
-moviesRouter.delete('/:_id', deleteMovieById);
+moviesRouter.post('/', postMovieRequestValidation, postMovie);
+moviesRouter.delete('/:_id', deleteMovieRequestValidation, deleteMovieById);
 
 module.exports = moviesRouter;
