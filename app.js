@@ -9,9 +9,9 @@ const cookieParser = require('cookie-parser');
 
 const { errors } = require('celebrate');
 
-const rateLimit = require('express-rate-limit');
-
 const cors = require('cors');
+
+const { limiter } = require('./utils/rateLimiter');
 
 const { errorHandler } = require('./middlewares/error-handler');
 const { PORT, DB_URL, ALLOWED_CORS } = require('./utils/constants');
@@ -19,13 +19,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes/index');
 
 const app = express();
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
 
 mongoose.connect(DB_URL, {});
 
