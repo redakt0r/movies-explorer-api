@@ -9,6 +9,7 @@ const {
   signInRequestValidation,
   signUpRequestValidation,
 } = require('../middlewares/request-validation');
+const { PAGE_NOT_FOUND_ERROR_MESSAGE } = require('../utils/constants');
 
 router.use('/signup', signUpRequestValidation, signUp);
 router.use('/signin', signInRequestValidation, signIn);
@@ -16,8 +17,9 @@ router.use('/signin', signInRequestValidation, signIn);
 router.use('/users', auth, usersRouter);
 router.use('/movies', auth, moviesRouter);
 
-router.use('/signout', signOut);
+router.use('/users', auth, usersRouter);
+router.use('/signout', auth, signOut);
 
-router.use('*', () => { throw new NotFoundError('Страница не найдена'); });
+router.use('*', auth, () => { throw new NotFoundError(PAGE_NOT_FOUND_ERROR_MESSAGE); });
 
 module.exports = router;

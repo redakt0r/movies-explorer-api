@@ -12,6 +12,19 @@ const ALLOWED_CORS = [
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
+const ITEM_NOT_FOUND_ERROR_MESSAGE = 'Фильм не найден';
+const CONFLICT_ERROR_MESSAGE = 'Пользователь с таким Email уже существует';
+const SIGN_OUT_MESSAGE = 'Вы вышли из приложения';
+const MOVIE_DELETED_MESSAGE = 'Фильм удален';
+const FORBIDDEN_ERROR_MESSAGE = 'Чужой фильм нельзя удалить';
+const INCORRECT_ID_ERROR_MESSAGE = 'Некорректный ID';
+const PAGE_NOT_FOUND_ERROR_MESSAGE = 'Страница не найдена';
+const AUTHORIZATION_REQUIRED_ERROR_MESSAGE = 'Необходима авторизация';
+const AUTHORIZATION_INCORRECT_ERROR_MESSAGE = 'Неправильные почта или пароль';
+const SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка';
+const URL_REG_EXP_ERROR_MESSAGE = 'Некорректная ссылка';
+const EMAIL_REG_EXP_ERROR_MESSAGE = 'Некорректный email';
+
 module.exports = {
   STATUS_OK,
   PORT,
@@ -21,4 +34,16 @@ module.exports = {
   ALLOWED_CORS,
   DEFAULT_ALLOWED_METHODS,
   SECRET_KEY,
+  ITEM_NOT_FOUND_ERROR_MESSAGE,
+  CONFLICT_ERROR_MESSAGE,
+  SIGN_OUT_MESSAGE,
+  MOVIE_DELETED_MESSAGE,
+  FORBIDDEN_ERROR_MESSAGE,
+  INCORRECT_ID_ERROR_MESSAGE,
+  PAGE_NOT_FOUND_ERROR_MESSAGE,
+  AUTHORIZATION_REQUIRED_ERROR_MESSAGE,
+  AUTHORIZATION_INCORRECT_ERROR_MESSAGE,
+  SERVER_ERROR_MESSAGE,
+  URL_REG_EXP_ERROR_MESSAGE,
+  EMAIL_REG_EXP_ERROR_MESSAGE,
 };
