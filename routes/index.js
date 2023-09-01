@@ -18,7 +18,7 @@ router.use('/users', auth, usersRouter);
 router.use('/movies', auth, moviesRouter);
 
 router.use('/users', auth, usersRouter);
-router.use('/signout', auth, signOut);
+router.use('/signout', signOut);
 
 router.use('*', auth, () => { throw new NotFoundError(PAGE_NOT_FOUND_ERROR_MESSAGE); });
 
