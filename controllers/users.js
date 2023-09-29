@@ -25,7 +25,10 @@ module.exports.patchUserInfo = (req, res, next) => {
   const { _id } = req.user;
   const { name, email } = req.body;
   User.findByIdAndUpdate(_id, { name, email }, { new: true, runValidators: true })
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      name: user.name,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.name === 'ValidationError') { throw new BadRequestError(err.message); }
       if (err.code === 11000) { throw new ConflictError(CONFLICT_ERROR_MESSAGE); }
@@ -59,7 +62,20 @@ module.exports.signUp = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then((hash) => {
       User.create({ name, email, password: hash })
-        .then(() => res.status(STATUS_OK).send({ email, name }))
+        .then((user) => {
+          const token = generateToken({ _id: user.id });
+          res.cookie('jwt', token, {
+            maxAge: 3600000 * 24 * 7,
+            httpOnly: true,
+            sameSite: true,
+          });
+          return res.status(STATUS_OK).send({
+            user: {
+              name: user.name,
+              email: user.email,
+            },
+          });
+        })
         .catch((err) => {
           if (err.name === 'ValidationError') { throw new BadRequestError(err.message); }
           if (err.code === 11000) { throw new ConflictError(CONFLICT_ERROR_MESSAGE); }

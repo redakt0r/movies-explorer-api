@@ -3,7 +3,7 @@ const {
   STATUS_OK,
   ITEM_NOT_FOUND_ERROR_MESSAGE,
   FORBIDDEN_ERROR_MESSAGE,
-  MOVIE_DELETED_MESSAGE,
+  // MOVIE_DELETED_MESSAGE,
   INCORRECT_ID_ERROR_MESSAGE,
 } = require('../utils/constants');
 
@@ -66,7 +66,7 @@ module.exports.deleteMovieById = (req, res, next) => {
       // eslint-disable-next-line max-len
       if (movie.owner.toString() !== req.user._id) { throw new ForbiddenError(FORBIDDEN_ERROR_MESSAGE); }
       return Movie.deleteOne(movie)
-        .then(() => res.send(MOVIE_DELETED_MESSAGE));
+        .then((deleted) => res.send(deleted));
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') { throw new BadRequestError(INCORRECT_ID_ERROR_MESSAGE); }
